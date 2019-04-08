@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnnonceRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Annonce
 {
@@ -50,6 +52,21 @@ class Annonce
      * @ORM\Column(type="integer")
      */
     private $rooms;
+
+	/**
+	 * Execution de la fonction avant qu'elle soit persister / update (avant que l'annonce ne soit créer) #AnnotationsDeCycleDeVie
+	 * @ORM\PrePersist()
+	 * @ORM\PreUpdate()
+	 * @return void
+	 */
+    public function initSlug()
+	{
+		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
+		{
+			$slugify = new Slugify();
+			$this->slug = $slugify->slugify($this->title);
+		}
+	}
 
     public function getId(): ?int
     {

@@ -14,6 +14,7 @@ class AppFixtures extends Fixture
     	// Utilisation de la librairie Faker pour faire des fausses données "réaliste"
     	$faker = Factory::create('fr_FR'); // Langue FR
 
+		// Une trentaine d'annonces
     	for ($i = 1; $i <= 30; $i++)
     	{
     		$annonce = new Annonce();
@@ -28,8 +29,7 @@ class AppFixtures extends Fixture
 				->setIntroduction($intro)
 				->setContent($content)
 				->setPrice(mt_rand(50, 300))
-				->setRooms(2, 5)
-				->setSlug("slug-annonce-n°$i");
+				->setRooms(mt_rand(2, 5));
 
 			$manager->persist($annonce);
 		}
