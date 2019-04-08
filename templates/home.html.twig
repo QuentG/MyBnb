@@ -1,7 +1,100 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %} Bienvenue ! {% endblock %}
 
-    <h1>COUCOU</h1>
+{% block body %}
+    <div class="container mt-3">
+        <div class="jumbotron">
+            <h1 class="display-3">Bienvenue sur Mybnb ! 🔥</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Voir nos annonces</a>
+            </p>
+        </div>
+
+        <h2 class="h1 mt-3 mb-4">Nos locations stars</h2>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center">
+                        3 chambres, <strong>49€ / nuit</strong> <br>
+                        <small>Pas encore noté</small>
+                    </div>
+                    <img src="http://placehold.it/1000x400 " alt="img" style="height: 200px; width: 100%; display: block;">
+                    <div class="card-body">
+                        <h4 class="card-title">Appart de ouf mon rhey</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, maxime molestiae molestias natus quasi reprehenderit sit temporibus ut voluptate voluptatibus?</p>
+                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center">
+                        3 chambres, <strong>49€ / nuit</strong> <br>
+                        <small>Pas encore noté</small>
+                    </div>
+                    <img src="http://placehold.it/1000x400 " alt="img" style="height: 200px; width: 100%; display: block;">
+                    <div class="card-body">
+                        <h4 class="card-title">Appart de ouf mon rhey</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, maxime molestiae molestias natus quasi reprehenderit sit temporibus ut voluptate voluptatibus?</p>
+                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center">
+                        3 chambres, <strong>49€ / nuit</strong> <br>
+                        <small>Pas encore noté</small>
+                    </div>
+                    <img src="http://placehold.it/1000x400 " alt="img" style="height: 200px; width: 100%; display: block;">
+                    <div class="card-body">
+                        <h4 class="card-title">Appart de ouf mon rhey</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, maxime molestiae molestias natus quasi reprehenderit sit temporibus ut voluptate voluptatibus?</p>
+                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="h1 mt-3 mb-4">Nos propriétaires stars</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Quentin Gans</h4>
+                        <hr>
+                        <div class="card-text">
+                            <img src="http://placehold.it/64x64" alt="imgUser" class="float-left mr-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, culpa.</p>
+                            <a href="#" class="btn btn-success float-right">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Quentin Gans</h4>
+                        <hr>
+                        <div class="card-text">
+                            <img src="http://placehold.it/64x64" alt="imgUser" class="float-left mr-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, culpa.</p>
+                            <a href="#" class="btn btn-success float-right">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
