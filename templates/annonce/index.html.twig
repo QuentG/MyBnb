@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1 class="h1 mt-3 mb-4">Nos annonces !</h1>
+
+        <div class="row">
+            {% for annonce in annonces %}
+            <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center">
+                        {{ annonce.rooms }} chambres, <strong>{{ annonce.price }}€ / nuit</strong> <br>
+                        <small>Pas encore noté</small>
+                    </div>
+                    <img src="{{ annonce.coverImage }}" alt="img" style="height: 200px; width: 100%; display: block;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ annonce.title }}</h4>
+                        <p class="card-text">{{ annonce.introduction }}</p>
+                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

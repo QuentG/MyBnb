@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ annonce.title }} {% endblock %}
+
+{% block body %}
+
+    <div class="show-title" style="background-image: url({{ annonce.coverImage }})">
+        <div class="container">
+            <h1>{{ annonce.title }}</h1>
+            <p>{{ annonce.introduction }}</p>
+            <p class="h2"><strong>{{ annonce.rooms }} chambres</strong> pour <strong>{{ annonce.price }}€</strong> / nuit</p>
+            <a href="#" class="btn btn-primary">Réserver</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                {{ annonce.content | raw }}
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="http://placehold.it/64x64" alt="imgUser">
+                    </div>
+                    <div class="col">
+                        <h3>Quentin GANS</h3>
+                        <span class="badge badge-primary">6 annonces</span>
+                    </div>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at ex impedit iste molestiae
+                    voluptatibus?</p>
+                <p>Accusamus beatae consequatur eum excepturi in ipsam laudantium officiis provident, quo repellat
+                    soluta, tempora voluptatibus!</p>
+                <p>Accusantium aspernatur consectetur deserunt dolorem ea, eos et eveniet fugiat magni non officia
+                    perspiciatis tempora.</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -2,3 +2,10 @@ home:
    path: /
    controller: App\Controller\HomeController::Home
 
+annonces:
+   path: /annonces
+   controller: App\Controller\AnnonceController::index
+
+annonce:
+   path: /annonce/{slug}
+   controller: App\Controller\AnnonceController::showOneAnnonce
