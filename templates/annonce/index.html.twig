@@ -15,11 +15,11 @@
                         {{ annonce.rooms }} chambres, <strong>{{ annonce.price }}€ / nuit</strong> <br>
                         <small>Pas encore noté</small>
                     </div>
-                    <img src="{{ annonce.coverImage }}" alt="img" style="height: 200px; width: 100%; display: block;">
+                    <a href="{{ path('annonce', {'slug': annonce.slug}) }}"><img src="{{ annonce.coverImage }}" alt="img" style="height: 200px; width: 100%; display: block;"></a>
                     <div class="card-body">
-                        <h4 class="card-title">{{ annonce.title }}</h4>
+                        <a href="{{ path('annonce', {'slug': annonce.slug}) }}"><h4 class="card-title">{{ annonce.title }}</h4></a>
                         <p class="card-text">{{ annonce.introduction }}</p>
-                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                        <a href="{{ path('annonce', {'slug': annonce.slug}) }}" class="btn btn-primary">En savoir plus</a>
                     </div>
                 </div>
             </div>
