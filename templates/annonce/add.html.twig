@@ -1,18 +1,71 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form _self %}
+
 {% block title %} Creation d'une annonce {% endblock %}
 
 {% block body %}
 
     <div class="container">
         <h1>Créer une annonce !</h1>
-
         {{ form_start(form) }}
-
         {{ form_widget(form) }}
         <button type="submit" class="btn btn-primary">Créer une annonce</button>
         {{ form_end(form) }}
-
     </div>
 
+{% endblock %}
+
+{% block _annonce_images_widget %}
+    <p>Ajouter d'autres images</p>
+
+    {{ form_widget(form) }}
+
+    <div class="form-group">
+        <button type="button" id="add-img" class="btn btn-info">Ajouter une image</button>
+    </div>
+{% endblock %}
+
+{% block _annonce_images_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _annonce_images_entry_widget %}
+    <div id="block_{{ id }}" class="form-group">
+        <div class="row">
+            <div class="col-10">
+                <div class="row">
+                    <div class="col">{{ form_widget(form.url) }}</div>
+                    <div class="col">{{ form_widget(form.caption) }}</div>
+                </div>
+            </div>
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function deleteBtn() {
+            $('button[data-action="delete"]').click(function() {
+                const target = this.dataset.target;
+                $(target).remove();
+            });
+        }
+
+        $('#add-img').click(function() {
+            // Récupération des futurs champs que l'on va créer
+            const index = $('#annonce_images div.form-group').length;
+            // Récupération des prototypes des entrées
+            const proto = $('#annonce_images').data('prototype').replace(/__name__/g, index);
+            // Injection du code au sein de la div
+            $("#annonce_images").append(proto);
+
+            deleteBtn();
+        });
+
+        deleteBtn();
+    </script>
 {% endblock %}

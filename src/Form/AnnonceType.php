@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Annonce;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -41,6 +42,12 @@ class AnnonceType extends AbstractType
             ->add('content', TextareaType::class, $this->getConfig("Description", "Ecrire une description de votre annonce"))
 			->add('rooms', IntegerType::class, $this->getConfig("Nombre de chambres", "Entrez le nombres de chambres disponibles"))
 			->add('coverImage', UrlType::class, $this->getConfig("Url de l'image principale", "Donnez l'adresse de votre image principale"))
+			->add('images', CollectionType::class, [
+				// Le champ OU le formulaire que l'on veut répéter
+				'entry_type' => ImageType::class,
+				// Precise si on doit ajouter de nouveaux éléments
+				'allow_add' => true
+			])
         ;
     }
 
