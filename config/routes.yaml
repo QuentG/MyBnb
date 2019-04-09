@@ -6,6 +6,10 @@ annonces:
    path: /annonces
    controller: App\Controller\AnnonceController::index
 
+add:
+   path: /annonce/add
+   controller: App\Controller\AnnonceController::createAnnonce
+
 annonce:
    path: /annonce/{slug}
    controller: App\Controller\AnnonceController::showOneAnnonce
