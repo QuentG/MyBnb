@@ -72,11 +72,18 @@ class AnnonceController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid())
 		{
+			// Toutes les images
+			foreach ($annonce->getImages() as $img)
+			{
+				$img->setAnnonce($annonce);
+				$this->manager->persist($img);
+			}
+
 			$this->manager->persist($annonce);
 			$this->manager->flush();
 
 			$this->addFlash('success',
-				"L'annonce <strong>{$annonce->getTitle()}</strong>a bien été enregistrée !"
+				"L'annonce <strong>{$annonce->getTitle()}</strong> a bien été enregistrée !"
 			);
 
 			return $this->redirectToRoute('annonce', [
