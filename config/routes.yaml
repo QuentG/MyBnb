@@ -17,3 +17,10 @@ annonce:
 edit:
    path: /annonce/{slug}/edit
    controller: App\Controller\AnnonceController::editAnnonce
+
+login:
+   path: /login
+   controller: App\Controller\AccountController::login
+
+logout:
+   path: /logout
