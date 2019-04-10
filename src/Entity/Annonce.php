@@ -6,10 +6,16 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnnonceRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     message="Une autre annonce possède déjà ce titre !"
+ * )
  */
 class Annonce
 {
@@ -22,6 +28,7 @@ class Annonce
 
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\Length(min="5", max="15", minMessage="Le titre doit faire minimum 5 caractères", maxMessage="Le titre doit faire maximum 15 caractères")
      */
     private $title;
 
@@ -37,16 +44,19 @@ class Annonce
 
     /**
      * @ORM\Column(type="text")
-     */
+	 * @Assert\Length(min="20", max="100", minMessage="L'introduction doit faire minimum 20 caractères", maxMessage="L'introduction doit faire maximum 100 caractères")
+	 */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
-     */
+	 * @Assert\Length(min="100", max="1000", minMessage="La description doit faire minimum 100 caractères", maxMessage="La description doit faire maximum 1000 caractères")
+	 */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\Url()
      */
     private $coverImage;
 
@@ -57,6 +67,7 @@ class Annonce
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="annonce", orphanRemoval=true)
+	 * @Assert\Valid() // Permet de valider les images qui sont reliées à l'annonce
      */
     private $images;
 

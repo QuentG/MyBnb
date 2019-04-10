@@ -13,3 +13,7 @@ add:
 annonce:
    path: /annonce/{slug}
    controller: App\Controller\AnnonceController::showOneAnnonce
+
+edit:
+   path: /annonce/{slug}/edit
+   controller: App\Controller\AnnonceController::editAnnonce

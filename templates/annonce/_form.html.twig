@@ -1,0 +1,32 @@
+{# Sous formulaire ! #}
+{% block _annonce_images_widget %}
+    <p>Ajouter d'autres images</p>
+
+    {{ form_widget(form) }}
+
+    <input type="hidden" id="widgets_counter" value="0">
+
+    <div class="form-group">
+        <button type="button" id="add-img" class="btn btn-info">Ajouter une image</button>
+    </div>
+{% endblock %}
+
+{% block _annonce_images_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _annonce_images_entry_widget %}
+    <div id="block_{{ id }}" class="form-group">
+        <div class="row">
+            <div class="col-10">
+                <div class="row">
+                    <div class="col">{{ form_widget(form.url) }} {{ form_errors(form.url) }}</div>
+                    <div class="col">{{ form_widget(form.caption) }} {{ form_errors(form.caption) }}</div>
+                </div>
+            </div>
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

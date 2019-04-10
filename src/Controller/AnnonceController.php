@@ -95,4 +95,41 @@ class AnnonceController extends AbstractController
 			'form' => $form->createView()
 		]);
 	}
+
+	/**
+	 * @param Request $request
+	 * @param Annonce $annonce (ParamConverter)
+	 * @return Response
+	 */
+	public function editAnnonce(Request $request, Annonce $annonce)
+	{
+		$form = $this->createForm(AnnonceType::class, $annonce);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid())
+		{
+			// Toutes les images
+			foreach ($annonce->getImages() as $img)
+			{
+				$img->setAnnonce($annonce);
+				$this->manager->persist($img);
+			}
+
+			$this->manager->persist($annonce);
+			$this->manager->flush();
+
+			$this->addFlash('success',
+				"L'annonce <strong>{$annonce->getTitle()}</strong> a bien été modifiée !"
+			);
+
+			return $this->redirectToRoute('annonce', [
+				'slug' => $annonce->getSlug()
+			]);
+		}
+
+		return $this->render('annonce/edit.html.twig', [
+			'annonce' => $annonce,
+			'form' => $form->createView()
+		]);
+	}
 }

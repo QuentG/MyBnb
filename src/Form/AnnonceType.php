@@ -46,7 +46,8 @@ class AnnonceType extends AbstractType
 				// Le champ OU le formulaire que l'on veut répéter
 				'entry_type' => ImageType::class,
 				// Precise si on doit ajouter de nouveaux éléments
-				'allow_add' => true
+				'allow_add' => true,
+				'allow_delete' => true
 			])
         ;
     }
