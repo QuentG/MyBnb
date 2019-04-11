@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\UpdatePassword;
 use App\Entity\User;
+use App\Form\AccountType;
 use App\Form\RegistrationType;
+use App\Form\UpdatePasswordType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -78,6 +82,69 @@ class AccountController extends AbstractController
 		}
 
 		return $this->render('account/registration.html.twig', [
+			'form' => $form->createView()
+		]);
+	}
+
+	/**
+	 * @param Request $request
+	 * @return Response
+	 */
+	public function editProfil(Request $request)
+	{
+		// Récupération du user connecté $this->getUser();
+		$form = $this->createForm(AccountType::class, $this->getUser());
+		$form->handleRequest($request);
+
+		if($form->isSubmitted() && $form->isValid())
+		{
+			$this->manager->flush();
+
+			$this->addFlash('success',
+				'Votre profil a bien été modifié !');
+		}
+
+		return $this->render('account/profil.html.twig', [
+			'form' => $form->createView()
+		]);
+	}
+
+	/**
+	 * @param Request $request
+	 * @param UserPasswordEncoderInterface $encoder
+	 * @return Response
+	 */
+	public function changePassword(Request $request, UserPasswordEncoderInterface $encoder)
+	{
+		$updatePassword = new UpdatePassword();
+		$user = $this->getUser();
+
+		$form = $this->createForm(UpdatePasswordType::class, $updatePassword);
+		$form->handleRequest($request);
+
+		if($form->isSubmitted() && $form->isValid())
+		{
+			if(!password_verify($updatePassword->getOldPassword(), $user->getHash()))
+			{
+				// Ajout d'une erreur sur un champ en particulier
+				$form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe actuel"));
+			} else {
+
+				$newPassword = $updatePassword->getNewPassword();
+				$hash = $encoder->encodePassword($user, $newPassword);
+				$user->setHash($hash);
+
+				$this->manager->persist($user);
+				$this->manager->flush();
+
+				$this->addFlash('success',
+					'Votre mot de passe a bien été changé');
+
+				return $this->redirectToRoute('home');
+			}
+		}
+
+		return $this->render('account/password.html.twig', [
 			'form' => $form->createView()
 		]);
 	}

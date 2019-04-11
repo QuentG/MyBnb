@@ -28,3 +28,11 @@ logout:
 register:
    path: /register
    controller: App\Controller\AccountController::register
+
+profil:
+   path: /account/profil
+   controller: App\Controller\AccountController::editProfil
+
+change-password:
+   path: /account/change-password
+   controller: App\Controller\AccountController::changePassword
