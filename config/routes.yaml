@@ -36,3 +36,7 @@ profil:
 change-password:
    path: /account/change-password
    controller: App\Controller\AccountController::changePassword
+
+user:
+   path: /user/{slug}
+   controller: App\Controller\UserController::index

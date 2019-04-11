@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.fullName }}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-3 text-center">
+                <img src="{{ user.picture }}" class="avatar mb-3" alt="Avatar de {{ user.fullName }}">
+                <br>
+                <span class="badge badge-primary">{{ user.annonces | length }} annonces</span>
+            </div>
+            <div class="col-9">
+                <h1>{{ user.fullName }}</h1>
+            </div>
+        </div>
+        {{ user.description | raw }}
+        <hr>
+
+        <h2>Les annonces de {{ user.fullName }}</h2>
+
+        {% if user.annonces | length > 0 %}
+            <div class="row mt-5">
+                {% for annonce in user.annonces %}
+                    {% include 'annonce/_annonce.html.twig' %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <p>
+                    <strong>{{ user.fullName }}</strong> n'as pas encore d'annonce !
+                </p>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

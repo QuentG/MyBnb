@@ -9,24 +9,9 @@
 
         <div class="row">
             {% for annonce in annonces %}
-                {% set urlAnnonce = path('annonce', {'slug': annonce.slug}) %}
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-header text-center">
-                        {{ annonce.rooms }} chambres, <strong>{{ annonce.price }}€ / nuit</strong> <br>
-                        <small>Pas encore noté</small>
-                    </div>
-                    <a href="{{ urlAnnonce }}"><img src="{{ annonce.coverImage }}" alt="img" style="height: 200px; width: 100%; display: block;"></a>
-                    <div class="card-body">
-                        <a href="{{ urlAnnonce }}"><h4 class="card-title">{{ annonce.title }}</h4></a>
-                        <p class="card-text">{{ annonce.introduction }}</p>
-                        <a href="{{ urlAnnonce }}" class="btn btn-primary">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
+                {% include 'annonce/_annonce.html.twig' %}
             {% endfor %}
         </div>
-
     </div>
 
 {% endblock %}

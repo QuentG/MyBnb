@@ -104,6 +104,11 @@ class User implements UserInterface
      */
     private $annonces;
 
+    public function getFullName()
+	{
+		return "{$this->firstname} {$this->lastname}";
+	}
+
 	/**
 	 * Execution de la fonction avant qu'elle soit persister / update (avant que l'annonce ne soit créer) #AnnotationsDeCycleDeVie
 	 * @ORM\PrePersist()
