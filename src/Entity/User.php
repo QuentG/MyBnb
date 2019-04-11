@@ -6,11 +6,17 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Cet email est déjà utilisé.."
+ * )
  */
 class User implements UserInterface
 {
@@ -23,21 +29,33 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\NotBlank(
+	 *     message="Veuillez renseigner votre prénom"
+	 * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\NotBlank(
+	 *     message="Veuillez renseigner votre nom de famille"
+	 * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\Email(
+	 *     message="Adresse mail incorrect ! Veuillez renseigner un email valide"
+	 * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+	 * @Assert\Url(
+	 *     message="Veuillez donner une url valide"
+	 * )
      */
     private $picture;
 
@@ -46,13 +64,33 @@ class User implements UserInterface
      */
     private $hash;
 
+	/**
+	 * @Assert\EqualTo(
+	 *     propertyPath="hash",
+	 *     message="Vos mots de passes ne sont pas identique"
+	 * )
+	 */
+    private $confirmPassword;
+
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\Length(
+	 *     min="15",
+	 *     minMessage="Votre introduction doit faire au minimum 15 caractères",
+	 *     max="100",
+	 *     maxMessage="Votre introduction doit faire au maximum 100 caractères"
+	 * )
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
+	 * @Assert\Length(
+	 *     min="60",
+	 *     minMessage="Votre introduction doit faire au minimum 60 caractères",
+	 *     max="1000",
+	 *     maxMessage="Votre introduction doit faire au maximum 1000 caractères"
+	 * )
      */
     private $description;
 
@@ -281,5 +319,23 @@ class User implements UserInterface
 	public function eraseCredentials()
 	{
 		// TODO: Implement eraseCredentials() method.
+	}
+
+	/**
+	 * @param mixed $confirmPassword
+	 * @return User
+	 */
+	public function setConfirmPassword($confirmPassword)
+	{
+		$this->confirmPassword = $confirmPassword;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getConfirmPassword()
+	{
+		return $this->confirmPassword;
 	}
 }

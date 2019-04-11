@@ -24,3 +24,7 @@ login:
 
 logout:
    path: /logout
+
+register:
+   path: /register
+   controller: App\Controller\AccountController::register
