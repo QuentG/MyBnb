@@ -40,3 +40,7 @@ change-password:
 user:
    path: /user/{slug}
    controller: App\Controller\UserController::index
+
+myaccount:
+   path: /account
+   controller: App\Controller\AccountController::myAccount

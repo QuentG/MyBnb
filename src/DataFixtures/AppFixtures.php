@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Annonce;
 use App\Entity\Image;
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -30,6 +31,22 @@ class AppFixtures extends Fixture
     {
     	// Utilisation de la librairie Faker pour faire des fausses données "réaliste"
     	$faker = Factory::create('fr_FR'); // Langue FR
+
+		$roleAdmin = new Role();
+		$roleAdmin->setTitle("ROLE_ADMIN");
+		$manager->persist($roleAdmin);
+
+		$userAdmin = new User();
+		$userAdmin->setFirstname("Quentin")
+			->setLastname("Gans")
+			->setEmail('contact@quentingans.fr')
+			->setHash($this->encoder->encodePassword($userAdmin, 'password'))
+			->setPicture('https://avatars2.githubusercontent.com/u/33687186?s=460&v=4')
+			->setIntroduction($faker->sentence)
+			->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+			->addUserRole($roleAdmin);
+
+		$manager->persist($userAdmin);
 
 		$users = [];
 		$genres = ['male', 'female'];

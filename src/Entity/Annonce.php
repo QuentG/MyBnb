@@ -28,7 +28,7 @@ class Annonce
 
     /**
      * @ORM\Column(type="string", length=255)
-	 * @Assert\Length(min="5", max="15", minMessage="Le titre doit faire minimum 5 caractères", maxMessage="Le titre doit faire maximum 15 caractères")
+	 * @Assert\Length(min="5", max="30", minMessage="Le titre doit faire minimum 5 caractères", maxMessage="Le titre doit faire maximum 30 caractères")
      */
     private $title;
 

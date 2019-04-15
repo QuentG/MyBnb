@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends AbstractController {
 
 	/**
+	 * Affiche la page d'accueil
+	 *
 	 * @return Response
 	 */
 	public function Home(): Response

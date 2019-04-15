@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends AbstractController
 {
 	/**
+	 * Affiche le profil du user connecté
+	 *
 	 * @param User $user
 	 * @return Response
 	 */

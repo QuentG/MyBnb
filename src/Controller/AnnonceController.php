@@ -6,6 +6,8 @@ use App\Entity\Annonce;
 use App\Form\AnnonceType;
 use App\Repository\AnnonceRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +36,8 @@ class AnnonceController extends AbstractController
 	}
 
 	/**
+	 * Voir toutes les annonces !
+	 *
 	 * @return Response
 	 */
 	public function index()
@@ -45,6 +49,8 @@ class AnnonceController extends AbstractController
     }
 
 	/**
+	 * Voir une annonce en fonction de son slug !
+	 *
 	 * @param string $slug
 	 * @return Response
 	 */
@@ -59,8 +65,12 @@ class AnnonceController extends AbstractController
 	}
 
 	/**
+	 * Ajouter une annonce !
+	 *
 	 * @param Request $request
 	 * @return Response
+	 *
+	 * @IsGranted("ROLE_USER")
 	 */
 	public function createAnnonce(Request $request)
 	{
@@ -78,6 +88,8 @@ class AnnonceController extends AbstractController
 				$img->setAnnonce($annonce);
 				$this->manager->persist($img);
 			}
+
+			$annonce->setAuthor($this->getUser());
 
 			$this->manager->persist($annonce);
 			$this->manager->flush();
@@ -97,9 +109,13 @@ class AnnonceController extends AbstractController
 	}
 
 	/**
+	 * Modifier une annonce !
+	 *
 	 * @param Request $request
 	 * @param Annonce $annonce (ParamConverter)
 	 * @return Response
+	 *
+	 * @Security("is_granted('ROLE_USER') and user === annonce.getAuthor()")
 	 */
 	public function editAnnonce(Request $request, Annonce $annonce)
 	{

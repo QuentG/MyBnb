@@ -35,6 +35,8 @@ class AccountController extends AbstractController
 	}
 
 	/**
+	 * Connexion
+	 *
 	 * @param AuthenticationUtils $authenticationUtils
 	 * @return Response
 	 */
@@ -50,11 +52,15 @@ class AccountController extends AbstractController
     }
 
 	/**
+	 * Deconnexion
+	 *
 	 * @return void
 	 */
 	public function logout() {}
 
 	/**
+	 * Inscription
+	 *
 	 * @param Request $request
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return Response
@@ -87,6 +93,8 @@ class AccountController extends AbstractController
 	}
 
 	/**
+	 * Edition du profil
+	 *
 	 * @param Request $request
 	 * @return Response
 	 */
@@ -110,6 +118,8 @@ class AccountController extends AbstractController
 	}
 
 	/**
+	 * Changer de mot de passe
+	 *
 	 * @param Request $request
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return Response
@@ -146,6 +156,18 @@ class AccountController extends AbstractController
 
 		return $this->render('account/password.html.twig', [
 			'form' => $form->createView()
+		]);
+	}
+
+	/**
+	 * Récupère le profil de l'utilisateur connecté
+	 *
+	 * @return Response
+	 */
+	public function myAccount()
+	{
+		return $this->render('user/index.html.twig', [
+			'user' => $this->getUser()
 		]);
 	}
 }

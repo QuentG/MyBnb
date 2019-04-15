@@ -35,3 +35,12 @@ div.carousel-caption {
     max-width: 70px;
     max-height: 70px;
 }
+
+/* ------------------------
+-------   NAV BAR   ------
+------------------------ */
+
+.avatar-mini {
+    max-width: 25px;
+    max-height: 25px;
+}

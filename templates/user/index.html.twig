@@ -13,6 +13,13 @@
             </div>
             <div class="col-9">
                 <h1>{{ user.fullName }}</h1>
+                {# is same as = comparer 2 objets #}
+                {% if user is same as(app.user) %}
+                    <div class="mt-3">
+                        <a href="{{ path('profil') }}" class="btn btn-primary mr-2 mb-2">Modifier mes informations</a>
+                        <a href="{{ path('change-password') }}" class="btn btn-primary mb-2">Modifier mon mot de passe</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
         {{ user.description | raw }}

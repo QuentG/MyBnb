@@ -50,10 +50,10 @@
             <div class="col">
                 <div class="row">
                     <div class="col-3">
-                        <img src="{{ auth.picture }}" class="avatar avatar-medium" alt="Avatar de {{ auth.getFullName }}">
+                        <a href="{{ path('user', {'slug': auth.slug} )}}"><img src="{{ auth.picture }}" class="avatar avatar-medium" alt="Avatar de {{ auth.getFullName }}"></a>
                     </div>
                     <div class="col">
-                        <h3>{{ auth.getFullName }}</h3>
+                        <a href="{{ path('user', {'slug': auth.slug} )}}"><h3>{{ auth.getFullName }}</h3></a>
                         <span class="badge badge-primary">{{ auth.annonces | length }} annonces</span>
                     </div>
                 </div>
