@@ -115,7 +115,8 @@ class AnnonceController extends AbstractController
 	 * @param Annonce $annonce (ParamConverter)
 	 * @return Response
 	 *
-	 * @Security("is_granted('ROLE_USER') and user === annonce.getAuthor()")
+	 * @Security("is_granted('ROLE_USER') and user === annonce.getAuthor()",
+	 *      message="Vous ne pouvez pas modifier les annonces des autres utilisateurs !")
 	 */
 	public function editAnnonce(Request $request, Annonce $annonce)
 	{
@@ -147,5 +148,23 @@ class AnnonceController extends AbstractController
 			'annonce' => $annonce,
 			'form' => $form->createView()
 		]);
+	}
+
+	/**
+	 * Permet de supprimer une annonce
+	 *
+	 * @return Response
+	 *
+	 * @Security("is_granted('ROLE_USER') and user === annonce.getAuthor()", message="Vous ne pouvez pas supprimer les annonces d'autres utilisateurs !")
+	 */
+	public function deleteAnnonce(Annonce $annonce)
+	{
+		$this->manager->remove($annonce);
+		$this->manager->flush();
+
+		$this->addFlash('success',
+			"L'annonce <strong>{$annonce->getTitle()}</strong> a bien été supprimer !");
+
+		return $this->redirectToRoute("annonces");
 	}
 }

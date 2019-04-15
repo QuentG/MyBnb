@@ -9,6 +9,8 @@ use App\Form\RegistrationType;
 use App\Form\UpdatePasswordType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,6 +99,8 @@ class AccountController extends AbstractController
 	 *
 	 * @param Request $request
 	 * @return Response
+	 *
+	 * @IsGranted("ROLE_USER")
 	 */
 	public function editProfil(Request $request)
 	{
@@ -123,6 +127,8 @@ class AccountController extends AbstractController
 	 * @param Request $request
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return Response
+	 *
+	 * @IsGranted("ROLE_USER")
 	 */
 	public function changePassword(Request $request, UserPasswordEncoderInterface $encoder)
 	{
@@ -160,9 +166,11 @@ class AccountController extends AbstractController
 	}
 
 	/**
-	 * Récupère le profil de l'utilisateur connecté
+	 * Affiche le profil de l'utilisateur connecté
 	 *
 	 * @return Response
+	 *
+	 * @IsGranted("ROLE_USER")
 	 */
 	public function myAccount()
 	{

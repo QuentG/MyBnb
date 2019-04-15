@@ -18,6 +18,10 @@ edit:
    path: /annonce/{slug}/edit
    controller: App\Controller\AnnonceController::editAnnonce
 
+delete:
+   path: /annonce/{slug}/delete
+   controller: App\Controller\AnnonceController:deleteAnnonce
+
 login:
    path: /login
    controller: App\Controller\AccountController::login
