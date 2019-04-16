@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -95,13 +96,43 @@ class Annonce
 	 * @return void
 	 */
 	public function initSlug()
-               	{
-               		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
-               		{
-               			$slugify = new Slugify();
-               			$this->slug = $slugify->slugify($this->title);
-               		}
-               	}
+	{
+		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
+		{
+			$slugify = new Slugify();
+			$this->slug = $slugify->slugify($this->title);
+		}
+	}
+
+	/**
+	 * Obtenir les jours qui ne sont pas disponibles pour une annonce
+	 *
+	 * @return array Un tableau d'objets DateTime représentant les jours d'occupation
+	 */
+	public function getNotAvailableDays()
+	{
+		$notAvailableDays = [];
+
+		foreach($this->reservations as $reservation)
+		{
+			// Calcul des jours qui se trouvent entre la date d'arrivée et de départ
+			$result = range(
+				$reservation->getStartDate()->getTimestamp(),
+				$reservation->getEndDate()->getTimestamp(),
+				24 * 60 * 60
+			);
+			// Transformer la tableau de range() en un autre tableau
+			$days = array_map(function ($dayTimestamp) {
+				// Transforme le Timestamp en une véritable date
+				return new DateTime(date('Y-m-d', $dayTimestamp));
+			}, $result);
+
+			// Fusionner 2 tableaux
+			$notAvailableDays = array_merge($notAvailableDays, $days);
+		}
+
+		return $notAvailableDays;
+	}
 
     public function getId(): ?int
     {

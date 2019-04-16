@@ -11,7 +11,7 @@
             <h1>{{ annonce.title }}</h1>
             <p>{{ annonce.introduction }}</p>
             <p class="h2"><strong>{{ annonce.rooms }} chambres</strong> pour <strong>{{ annonce.price }}€</strong> / nuit</p>
-            <a href="#" class="btn btn-primary">Réserver</a>
+            <a href="{{ path('reserver', {'slug': annonce.slug}) }}" class="btn btn-primary">Réserver</a>
 
             {% if app.user and app.user == annonce.author %}
                 <a href="{{ path('edit', {'slug': annonce.slug}) }}" class="btn btn-secondary">Modifier l'annonce</a>

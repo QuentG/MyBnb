@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation
 {
@@ -30,11 +34,13 @@ class Reservation
 
     /**
      * @ORM\Column(type="datetime")
+	 * @Assert\Date(message="Attention vous devez rentrer une date !")
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
+	 * @Assert\Date(message="Attention vous devez rentrer une date !")
      */
     private $endDate;
 
@@ -47,6 +53,81 @@ class Reservation
      * @ORM\Column(type="float")
      */
     private $amount;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
+	/**
+	 * @ORM\PrePersist()
+	 * @throws Exception
+	 */
+    public function prePersist()
+	{
+		if(empty($this->createdAt))
+		{
+			$this->createdAt = new DateTime();
+		}
+		if(empty($this->amount))
+		{
+			// prix de l'annonce * nbr jour
+			$this->amount = $this->annonce->getPrice() * $this->getDuration();
+		}
+	}
+
+	public function getDuration()
+	{
+		// Objet de type DateInterval
+		$diff = $this->endDate->diff($this->startDate);
+		return $diff->days;
+	}
+
+	/**
+	 * Récupère un tableau des journées qui correspondent à ma réservation
+	 *
+	 * @return array Un tableau d'objets DateTime représentant les jours de la réservation
+	 */
+	public function getDays()
+	{
+		$result = range(
+			$this->getStartDate()->getTimestamp(),
+			$this->getEndDate()->getTimestamp(),
+			24 * 60 * 60
+		);
+
+		$days = array_map(function ($dayTimestamp) {
+			return new DateTime(date('Y-m-d', $dayTimestamp));
+		}, $result);
+
+		return $days;
+	}
+
+	/**
+	 *
+	 */
+	public function isPossibleDates()
+	{
+		// Les dates qui sont impossibles pour l'annonce
+		$notAvailableDays = $this->annonce->getNotAvailableDays();
+		// Compare les dates choisies avec les dates impossibles
+		$reservationDays = $this->getDays();
+
+		$formatDay = function ($day) {
+			return $day->format('Y-m-d');
+		};
+
+		// Tableau qui contient des string des journées
+		$days = array_map($formatDay, $reservationDays);
+		$notAvailable = array_map($formatDay, $notAvailableDays);
+
+		foreach ($days as $day)
+		{
+			if (array_search($day, $notAvailable) !== false) return false;
+		}
+
+		return true;
+	}
 
     public function getId(): ?int
     {
@@ -121,6 +202,18 @@ class Reservation
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

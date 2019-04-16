@@ -48,3 +48,11 @@ user:
 myaccount:
    path: /account
    controller: App\Controller\AccountController::myAccount
+
+reserver:
+   path: /annonce/{slug}/reserver
+   controller: App\Controller\ReservationController:reserver
+
+show-reservation:
+   path: /reservation/{id}
+   controller: App\Controller\ReservationController:show

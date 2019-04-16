@@ -19,7 +19,9 @@ class AnnonceType extends ApplicationType
     {
         $builder
             ->add('title', TextType::class, $this->getConfig("Titre", "Titre de l'annonce"))
-            ->add('slug', TextType::class, $this->getConfig("Slug", "Url automatique", false))
+            ->add('slug', TextType::class, $this->getConfig("Slug", "Url automatique", [
+            		'required' => false
+			]))
             ->add('price', MoneyType::class, $this->getConfig("Prix par nuit", "Indiquez le prix pour une nuit"))
             ->add('introduction', TextType::class, $this->getConfig("Introduction", "Ecrire une description globale de votre annonce"))
             ->add('content', TextareaType::class, $this->getConfig("Description", "Ecrire une description de votre annonce"))

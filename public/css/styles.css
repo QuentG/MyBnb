@@ -37,10 +37,18 @@ div.carousel-caption {
 }
 
 /* ------------------------
--------   NAV BAR   ------
+--------  NAV BAR  --------
 ------------------------ */
 
 .avatar-mini {
     max-width: 25px;
     max-height: 25px;
+}
+
+/* ------------------------
+------- CALENDRIER -------
+------------------------ */
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    color: firebrick !important;
 }

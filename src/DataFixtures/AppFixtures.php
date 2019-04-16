@@ -123,13 +123,15 @@ class AppFixtures extends Fixture
 				$amount = $annonce->getPrice() * $duration;
 
 				$reserveur = $users[mt_rand(0, count($users) -1)];
+				$comment = $faker->paragraph();
 
 				$reservation->setReserveur($reserveur)
 					->setAnnonce($annonce)
 					->setStartDate($startDate)
 					->setEndDate($endDate)
 					->setCreatedAt($createdAt)
-					->setAmount($amount);
+					->setAmount($amount)
+					->setComment($comment);
 
 				$manager->persist($reservation);
 
