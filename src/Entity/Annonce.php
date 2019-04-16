@@ -77,9 +77,15 @@ class Annonce
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="annonce")
+     */
+    private $reservations;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 	/**
@@ -89,13 +95,13 @@ class Annonce
 	 * @return void
 	 */
 	public function initSlug()
-	{
-		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
-		{
-			$slugify = new Slugify();
-			$this->slug = $slugify->slugify($this->title);
-		}
-	}
+               	{
+               		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
+               		{
+               			$slugify = new Slugify();
+               			$this->slug = $slugify->slugify($this->title);
+               		}
+               	}
 
     public function getId(): ?int
     {
@@ -225,6 +231,37 @@ class Annonce
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getAnnonce() === $this) {
+                $reservation->setAnnonce(null);
+            }
+        }
 
         return $this;
     }

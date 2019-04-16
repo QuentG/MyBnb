@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Annonce;
 use App\Entity\Image;
+use App\Entity\Reservation;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -34,6 +35,7 @@ class AppFixtures extends Fixture
 
 		$roleAdmin = new Role();
 		$roleAdmin->setTitle("ROLE_ADMIN");
+
 		$manager->persist($roleAdmin);
 
 		$userAdmin = new User();
@@ -106,6 +108,31 @@ class AppFixtures extends Fixture
 					->setAnnonce($annonce);
 
 				$manager->persist($img);
+			}
+
+			// Réservations
+			for ($r = 1; $r <= mt_rand(0, 10); $r++)
+			{
+				$reservation = new Reservation();
+
+				$createdAt = $faker->dateTimeBetween('- 6 months');
+				$startDate = $faker->dateTimeBetween('- 3 months');
+				$duration = mt_rand(3, 10);
+
+				$endDate = (clone $startDate)->modify("+$duration days");
+				$amount = $annonce->getPrice() * $duration;
+
+				$reserveur = $users[mt_rand(0, count($users) -1)];
+
+				$reservation->setReserveur($reserveur)
+					->setAnnonce($annonce)
+					->setStartDate($startDate)
+					->setEndDate($endDate)
+					->setCreatedAt($createdAt)
+					->setAmount($amount);
+
+				$manager->persist($reservation);
+
 			}
 
 			$manager->persist($annonce);
