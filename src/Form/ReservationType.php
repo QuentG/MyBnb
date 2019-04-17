@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
+use App\Form\DataTransformer\FrenchToDateTimeTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,7 +11,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReservationType extends ApplicationType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+	/**
+	 * @var FrenchToDateTimeTransformer
+	 */
+	private $transformer;
+
+	public function __construct(FrenchToDateTimeTransformer $transformer)
+	{
+		$this->transformer = $transformer;
+	}
+
+	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('startDate', TextType::class, $this->getConfig("Date d'arivée", "Choisissez une date d'arrivée pour votre séjour"))
@@ -19,6 +31,9 @@ class ReservationType extends ApplicationType
 				'required' => false
 			]))
         ;
+
+        $builder->get('startDate')->addModelTransformer($this->transformer);
+        $builder->get('endDate')->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

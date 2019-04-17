@@ -35,12 +35,18 @@ class Reservation
     /**
      * @ORM\Column(type="datetime")
 	 * @Assert\Date(message="Attention vous devez rentrer une date !")
+	 * @Assert\GreaterThan(
+	 *     "today",
+	 *     message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui !")
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
 	 * @Assert\Date(message="Attention vous devez rentrer une date !")
+	 * @Assert\GreaterThan(
+	 *     propertyPath="startDate",
+	 *     message="La date de départ doit être plus éloignée que la date d'arrivée !")
      */
     private $endDate;
 

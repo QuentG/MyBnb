@@ -56,3 +56,7 @@ reserver:
 show-reservation:
    path: /reservation/{id}
    controller: App\Controller\ReservationController:show
+
+reservations:
+   path: /account/reservations
+   controller: App\Controller\AccountController:reservations

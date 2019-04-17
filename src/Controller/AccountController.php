@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
 use App\Entity\UpdatePassword;
 use App\Entity\User;
 use App\Form\AccountType;
@@ -177,5 +178,15 @@ class AccountController extends AbstractController
 		return $this->render('user/index.html.twig', [
 			'user' => $this->getUser()
 		]);
+	}
+
+	/**
+	 * Affiche toutes les réservations d'un utilisateur
+	 *
+	 * @return Response
+	 */
+	public function reservations()
+	{
+		return $this->render('account/reservations.html.twig');
 	}
 }
