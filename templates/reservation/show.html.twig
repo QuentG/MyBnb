@@ -39,8 +39,8 @@
                         <dd class="col-md-8">{{ reservation.duration }}</dd>
                         <dt class="col-md-4">Montant total</dt>
                         <dd class="col-md-8">{{ reservation.amount }} €</dd>
-                        <dt class="col-md-4">Commentaire(s)</dt>
-                        <dd class="col-md-8">{{ reservation.comment }}</dd>
+                        <dt class="col-md-4">Commentaire</dt>
+                        <dd class="col-md-8">{{ reservation.comment | default("Aucun commentaire")}}</dd>
                     </dl>
 
                     <hr>
@@ -57,6 +57,27 @@
                     </div>
                     {{ reservation.annonce.author.description | raw }}
                     <a href="{{ path('user', {'slug': reservation.annonce.author.slug}) }}" class="btn btn-primary">Voir le profil de {{ reservation.annonce.author.firstname }}</a>
+                </div>
+
+                <div class="alert alert-light" id="comment">
+                    <h2 class="alert-heading">Votre avis compte !</h2>
+                    {% if date() > date(reservation.endDate) %}
+                        {% set comment =  reservation.annonce.commentFromAuthor(app.user) %}
+
+                        {% if comment is not null %}
+                            <blockquote>{{ comment.content }}</blockquote>
+                            <strong>Note : </strong> {% include 'includes/rating.html.twig' with {'rating': comment.rating} %}
+                            {% else %}
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-success">Confirmer</button>
+                            {{ form_end(form) }}
+                        {% endif %}
+
+                    {% else %}
+                        <p>Vous ne pouvez pas noter cette anonce tant que votre séjour n'est pas terminé !</p>
+                    {% endif %}
+
                 </div>
             </div>
             <div class="col">

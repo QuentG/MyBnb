@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Comment;
 use App\Entity\Reservation;
+use App\Form\CommentType;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -75,12 +77,32 @@ class ReservationController extends AbstractController
 	 * Voir la page d'une réservation
 	 *
 	 * @param Reservation $reservation
+	 * @param Request $request
 	 * @return Response
 	 */
-    public function show(Reservation $reservation)
+    public function show(Reservation $reservation, Request $request)
 	{
+		$comment = new Comment();
+
+		$form = $this->createForm(CommentType::class, $comment);
+		$form->handleRequest($request);
+
+		if($form->isSubmitted() && $form->isValid()) {
+			$user = $this->getUser();
+			$annonce = $reservation->getAnnonce();
+
+			$comment->setAnnonce($annonce)
+				->setAuthor($user);
+
+			$this->manager->persist($comment);
+			$this->manager->flush();
+
+			$this->addFlash('success', 'Votre avis a bien été pris en compte !');
+		}
+
 		return $this->render('reservation/show.html.twig', [
-			'reservation' => $reservation
+			'reservation' => $reservation,
+			'form' => $form->createView()
 		]);
 	}
 }

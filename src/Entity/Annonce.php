@@ -83,10 +83,16 @@ class Annonce
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="annonce", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
 	/**
@@ -95,10 +101,9 @@ class Annonce
 	 * @ORM\PreUpdate()
 	 * @return void
 	 */
-	public function initSlug()
-	{
-		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
-		{
+	public function initSlug() {
+
+		if(empty($this->slug)) { // Si nous n'avons pas de Slug cela nous en crée un
 			$slugify = new Slugify();
 			$this->slug = $slugify->slugify($this->title);
 		}
@@ -109,12 +114,10 @@ class Annonce
 	 *
 	 * @return array Un tableau d'objets DateTime représentant les jours d'occupation
 	 */
-	public function getNotAvailableDays()
-	{
+	public function getNotAvailableDays() {
 		$notAvailableDays = [];
 
-		foreach($this->reservations as $reservation)
-		{
+		foreach($this->reservations as $reservation) {
 			// Calcul des jours qui se trouvent entre la date d'arrivée et de départ
 			$result = range(
 				$reservation->getStartDate()->getTimestamp(),
@@ -132,6 +135,40 @@ class Annonce
 		}
 
 		return $notAvailableDays;
+	}
+
+	/**
+	 * Obtenir la note moyenne globale des notes pour cette annonce
+	 *
+	 * @return float|int
+	 */
+	public function getAverageRatings() {
+		// Calcul de la somme des notations
+		$sum = array_reduce($this->comments->toArray(), function ($total, $comment) {
+			return $total + $comment->getRating();
+		}, 0);
+		// Division pour avoir la moyenne
+		if(count($this->comments) > 0) {
+			$moy = $sum / count($this->comments);
+			return $moy;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Récupère le commentaire d'un auteur par rapport à une annonce !
+	 *
+	 * @param User $author
+	 * @return mixed|null
+	 */
+	public function getCommentFromAuthor(User $author) {
+
+		foreach ($this->comments as $comment) {
+			if($comment->getAuthor() === $author) return $comment;
+		}
+
+		return null;
 	}
 
     public function getId(): ?int
@@ -291,6 +328,37 @@ class Annonce
             // set the owning side to null (unless already changed)
             if ($reservation->getAnnonce() === $this) {
                 $reservation->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAnnonce() === $this) {
+                $comment->setAnnonce(null);
             }
         }
 

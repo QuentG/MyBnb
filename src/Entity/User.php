@@ -114,6 +114,11 @@ class User implements UserInterface
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author", orphanRemoval=true)
+     */
+    private $comments;
+
     public function getFullName()
 	{
 		return "{$this->firstname} {$this->lastname}";
@@ -126,19 +131,20 @@ class User implements UserInterface
 	 * @return void
 	 */
 	public function initSlug()
-               	{
-               		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
-               		{
-               			$slugify = new Slugify();
-               			$this->slug = $slugify->slugify($this->firstname. ' ' . $this->lastname);
-               		}
-               	}
+	{
+		if(empty($this->slug)) // Si nous n'avons pas de Slug cela nous en crée un
+		{
+			$slugify = new Slugify();
+			$this->slug = $slugify->slugify($this->firstname. ' ' . $this->lastname);
+		}
+	}
 
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
         $this->userRoles = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -288,16 +294,16 @@ class User implements UserInterface
 	 * @return array (Role|string)[] The user roles
 	 */
 	public function getRoles()
-               	{
-               		// Transformation en tableau PHP classique
-               		$roles = $this->userRoles->map(function ($role) {
-               			return $role->getTitle();
-               		})->toArray();
-               
-               		$roles[] = 'ROLE_USER';
-               
-               		return $roles;
-               	}
+                              	{
+                              		// Transformation en tableau PHP classique
+                              		$roles = $this->userRoles->map(function ($role) {
+                              			return $role->getTitle();
+                              		})->toArray();
+                              
+                              		$roles[] = 'ROLE_USER';
+                              
+                              		return $roles;
+                              	}
 
 	/**
 	 * Returns the password used to authenticate the user.
@@ -308,9 +314,9 @@ class User implements UserInterface
 	 * @return string The password
 	 */
 	public function getPassword()
-               	{
-               		return $this->hash;
-               	}
+                              	{
+                              		return $this->hash;
+                              	}
 
 	/**
 	 * Returns the salt that was originally used to encode the password.
@@ -320,9 +326,9 @@ class User implements UserInterface
 	 * @return string|null The salt
 	 */
 	public function getSalt()
-               	{
-               		// TODO: Implement getSalt() method.
-               	}
+                              	{
+                              		// TODO: Implement getSalt() method.
+                              	}
 
 	/**
 	 * Returns the username used to authenticate the user.
@@ -330,9 +336,9 @@ class User implements UserInterface
 	 * @return string The username
 	 */
 	public function getUsername()
-               	{
-               		return $this->email;
-               	}
+                              	{
+                              		return $this->email;
+                              	}
 
 	/**
 	 * Removes sensitive data from the user.
@@ -341,27 +347,27 @@ class User implements UserInterface
 	 * the plain-text password is stored on this object.
 	 */
 	public function eraseCredentials()
-               	{
-               		// TODO: Implement eraseCredentials() method.
-               	}
+                              	{
+                              		// TODO: Implement eraseCredentials() method.
+                              	}
 
 	/**
 	 * @param mixed $confirmPassword
 	 * @return User
 	 */
 	public function setConfirmPassword($confirmPassword)
-               	{
-               		$this->confirmPassword = $confirmPassword;
-               		return $this;
-               	}
+                              	{
+                              		$this->confirmPassword = $confirmPassword;
+                              		return $this;
+                              	}
 
 	/**
 	 * @return mixed
 	 */
 	public function getConfirmPassword()
-               	{
-               		return $this->confirmPassword;
-               	}
+                              	{
+                              		return $this->confirmPassword;
+                              	}
 
     /**
      * @return Collection|Role[]
@@ -416,6 +422,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($reservation->getReserveur() === $this) {
                 $reservation->setReserveur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
             }
         }
 

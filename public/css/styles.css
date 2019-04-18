@@ -6,6 +6,10 @@ div.container {
     margin-top: 20px;
 }
 
+span.rating i {
+    color: goldenrod;
+}
+
 /* ------------------------
 -------  SHOW PAGE  ------
 ------------------------ */

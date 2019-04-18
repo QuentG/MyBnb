@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Annonce;
+use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Reservation;
 use App\Entity\Role;
@@ -134,6 +135,18 @@ class AppFixtures extends Fixture
 					->setComment($comment);
 
 				$manager->persist($reservation);
+
+				// Gestion des commentaires
+				if(mt_rand(0,1)) {
+					$comment = new Comment();
+
+					$comment->setContent($faker->paragraph())
+						->setRating(mt_rand(1,5))
+						->setAuthor($reserveur)
+						->setAnnonce($annonce);
+
+					$manager->persist($comment);
+				}
 
 			}
 

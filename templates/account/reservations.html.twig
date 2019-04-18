@@ -15,6 +15,15 @@
             <div class="row mt-5">
                 <div class="col-4">
                     <img src="{{ an.coverImage }}" alt="Image de l'annonce {{ an.title }}" class="img-fluid">
+                    <div class="mt-3">
+                        {% set comment = an.commentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                            <strong>Note donnée : </strong>{% include 'includes/rating.html.twig' with {'rating': comment.rating} %}
+                        {% else %}
+                            Vous n'avez pas encore donnée de note !
+                            <a href="{{ path('show-reservation', {'id': reservation.id}) }}#comment">Donner mon avis !</a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="col-8">
                     <h4>{{ an.title }}</h4>
