@@ -5,7 +5,7 @@
 {% block body %}
 
     <div class="container">
-        <h1>Mes réservations !</h1>
+        <h1 class="my-5">Mes réservations !</h1>
         <div class="alert alert-info mt-3">
             <p>Retrouvez ci-dessous toutes vos réservations passés et à venir</p>
         </div>
@@ -13,7 +13,7 @@
         {% for reservation in app.user.reservations %}
             {% set an = reservation.annonce %}
             <div class="row mt-5">
-                <div class="col-4">
+                <div class="col-md-4">
                     <img src="{{ an.coverImage }}" alt="Image de l'annonce {{ an.title }}" class="img-fluid">
                     <div class="mt-3">
                         {% set comment = an.commentFromAuthor(app.user) %}
@@ -25,11 +25,11 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-8">
+                <div class="col-md-8">
                     <h4>{{ an.title }}</h4>
                     <p>Réservation <strong>n°{{ reservation.id }}</strong>
                         <br>
-                        Du {{ reservation.startDate | date('d/m/Y') }} au {{ reservation.endDate | date('d/m/Y') }} à <strong>{{ reservation.amount }} €</strong>
+                        Du {{ reservation.startDate | date('d/m/Y') }} au {{ reservation.endDate | date('d/m/Y') }} à <strong>{{ reservation.amount | number_format(2, ',', ' ') }}€</strong>
                     </p>
                     <a href="{{ path('show-reservation', {'id': reservation.id}) }}" class="btn btn-info">Plus d'informations</a>
                 </div>

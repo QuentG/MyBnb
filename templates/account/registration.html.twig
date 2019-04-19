@@ -5,10 +5,36 @@
 {% block body %}
 
     <div class="container">
-        <h1>Inscrivez vous !</h1>
+        <h1 class="my-5">Inscrivez vous !</h1>
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Confirmez</button>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2 class="alert alert-heading">Informations générales</h2>
+                    <hr>
+                    {{ form_row(form.firstname) }}
+                    {{ form_row(form.lastname) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.picture) }}
+                </div>
+                <div class="alert alert-light">
+                    <h2 class="alert-heading">Mot de passe</h2>
+                    <hr>
+                    {{ form_row(form.hash) }}
+                    {{ form_row(form.confirmPassword) }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2 class="alert alert-heading">Détails</h2>
+                    {{ form_row(form.introduction) }}
+                    {{ form_row(form.description) }}
+                    <hr>
+                    <p>Confirmez votre inscription</p>
+                    <button type="submit" class="btn btn-block btn-success"><i class="fas fa-check mr-1"></i>Confirmez l'inscription</button>
+                </div>
+            </div>
+        </div>
         {{ form_end(form) }}
     </div>
 

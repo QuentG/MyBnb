@@ -10,7 +10,7 @@
         <div class="container">
             <h1>{{ annonce.title }}</h1>
             <p>{{ annonce.introduction }}</p>
-            <p class="h2"><strong>{{ annonce.rooms }} chambres</strong> pour <strong>{{ annonce.price }}€</strong> / nuit</p>
+            <p class="h2"><strong>{{ annonce.rooms }} chambres</strong> pour <strong>{{ annonce.price | number_format(2, ',', ' ') }}€</strong> / nuit</p>
             <a href="{{ path('reserver', {'slug': annonce.slug}) }}" class="btn btn-primary">Réserver</a>
 
             {% if app.user and app.user == annonce.author %}

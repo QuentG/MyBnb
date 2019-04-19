@@ -7,10 +7,38 @@
 {% block body %}
 
     <div class="container">
-        <h1>Créer une annonce !</h1>
+        <h1 class="my-5">Créer une annonce !</h1>
             {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary">Créer une annonce</button>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-light">
+                        <h2>Informations générales</h2>
+                        <hr>
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.slug) }}
+                        {{ form_row(form.price) }}
+                        {{ form_row(form.rooms) }}
+                    </div>
+                    <div class="alert alert-light">
+                        <h2>Détails de l'annonce</h2>
+                        <hr>
+                        {{ form_row(form.introduction) }}
+                        {{ form_row(form.content) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="alert alert-light">
+                        <h2>Image de l'annonce</h2>
+                        <hr>
+                        {{ form_row(form.coverImage) }}
+                        {{ form_row(form.images) }}
+                    </div>
+                    <div class="alert alert-light clearfix">
+                        <h2 class="alert alert-heading">Sauvegarder mon annonce</h2>
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-check mr-1"></i>Créer une annonce</button>
+                    </div>
+                </div>
+            </div>
             {{ form_end(form) }}
     </div>
 

@@ -5,7 +5,7 @@
 {% block body %}
 
     <div class="container">
-        <h1>Votre réservation (n°{{ reservation.id }})</h1>
+        <h1 class="my-5">Votre réservation (n°{{ reservation.id }})</h1>
 
         {# Requiest => parem en get => 'withAlert' #}
         {% if app.request.query.get('withAlert') %}
@@ -38,7 +38,7 @@
                         <dt class="col-md-4">Nombre de nuit(s)</dt>
                         <dd class="col-md-8">{{ reservation.duration }}</dd>
                         <dt class="col-md-4">Montant total</dt>
-                        <dd class="col-md-8">{{ reservation.amount }} €</dd>
+                        <dd class="col-md-8">{{ reservation.amount | number_format(2, ',', ' ') }}€</dd>
                         <dt class="col-md-4">Commentaire</dt>
                         <dd class="col-md-8">{{ reservation.comment | default("Aucun commentaire")}}</dd>
                     </dl>

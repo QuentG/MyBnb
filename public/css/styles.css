@@ -11,6 +11,12 @@ span.rating i {
 }
 
 /* ------------------------
+-------  HOME PAGE  ------
+------------------------ */
+
+
+
+/* ------------------------
 -------  SHOW PAGE  ------
 ------------------------ */
 
@@ -23,6 +29,12 @@ div.show-title {
     padding: 2em;
     background-size: cover;
     background-position: center center;
+}
+
+div.show-title .btn {
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 1.5em;
 }
 
 div.carousel-caption {
@@ -55,4 +67,12 @@ div.carousel-caption {
 
 .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
     color: firebrick !important;
+}
+
+/* ------------------------
+-- MY RESERVATIONS PAGE --
+------------------------ */
+
+.alert a {
+    text-decoration: none;
 }
