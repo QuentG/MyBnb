@@ -25,6 +25,12 @@ class ReservationController extends AbstractController
 	 */
 	private $repository;
 
+	/**
+	 * ReservationController constructor.
+	 *
+	 * @param ReservationRepository $repository
+	 * @param ObjectManager $manager
+	 */
 	public function __construct(ReservationRepository $repository, ObjectManager $manager)
 	{
 		$this->repository = $repository;

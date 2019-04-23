@@ -26,6 +26,7 @@ class AnnonceController extends AbstractController
 
 	/**
 	 * AnnonceController constructor.
+	 *
 	 * @param AnnonceRepository $repository
 	 * @param ObjectManager $manager
 	 */

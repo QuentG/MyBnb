@@ -31,6 +31,12 @@ class AccountController extends AbstractController
 	 */
 	private $repository;
 
+	/**
+	 * AccountController constructor.
+	 *
+	 * @param UserRepository $repository
+	 * @param ObjectManager $manager
+	 */
 	public function __construct(UserRepository $repository, ObjectManager $manager)
 	{
 		$this->repository = $repository;
