@@ -76,3 +76,12 @@ div.carousel-caption {
 .alert a {
     text-decoration: none;
 }
+
+/* ------------------------
+---------  ADMIN   --------
+------------------------ */
+
+.avatar-micro{
+    max-width: 24px;
+    max-height: 24px;
+}

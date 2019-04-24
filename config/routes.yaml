@@ -60,3 +60,7 @@ show-reservation:
 reservations:
    path: /account/reservations
    controller: App\Controller\AccountController:reservations
+
+admin_annonces_index:
+   path: /admin/annonces
+   controller: App\Controller\AdminAnnonceController:index
