@@ -44,7 +44,7 @@ class AccountController extends AbstractController
 	}
 
 	/**
-	 * Connexion
+	 * Connexion user
 	 *
 	 * @param AuthenticationUtils $authenticationUtils
 	 * @return Response
@@ -61,7 +61,7 @@ class AccountController extends AbstractController
     }
 
 	/**
-	 * Deconnexion
+	 * Déconnexion user
 	 *
 	 * @return void
 	 */

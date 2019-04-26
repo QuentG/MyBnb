@@ -1,11 +1,54 @@
-{% extends 'base.html.twig' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Admin - Login</title>
 
-{% block title %}Admin - Login{% endblock %}
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
 
-{% block body %}
+</head>
+<body>
 
-    <div class="container">
+    <div class="col-md-5">
+        <div class="card bg-light mt-5">
+            <div class="card-header">
+                <h4 class="card-title"><i class="fas fa-lock"></i> Connexion à l'administration</h4>
+            </div>
 
+            <div class="card-body">
+
+                {% if error %}
+                    <div class="alert alert-warning">
+                        <p>Les informations ne sont pas bonnes !</p>
+                    </div>
+                {% endif %}
+
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input type="text" class="form-control" placeholder="Adresse email" name="_username" value="{{ lastname }}">
+                        <label for="">Mot de passe</label>
+                        <input type="password" class="form-control" placeholder="Mot de passe" name="_password">
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-lock-open"></i> Connexion</button>
+                            <a href="{{ path('home') }}" class="btn btn-link"><i class="fas fa-arrow-circle-left"></i> Revenir au site</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
     </div>
 
-{% endblock %}
+</body>
+</html>

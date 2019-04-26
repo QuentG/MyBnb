@@ -24,7 +24,7 @@ security:
                 check_path: admin_login
 
             logout:
-                path: logout
+                path: admin_logout
                 target: home
         main:
             anonymous: true

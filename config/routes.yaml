@@ -68,3 +68,7 @@ admin_annonces_index:
 admin_login:
    path: /admin/login
    controller: App\Controller\AdminAccountController:login
+
+admin_logout:
+   path: /admin/logout
+   controller: App\Controller\AdminAccountController:logout
