@@ -64,3 +64,7 @@ reservations:
 admin_annonces_index:
    path: /admin/annonces
    controller: App\Controller\AdminAnnonceController:index
+
+admin_login:
+   path: /admin/login
+   controller: App\Controller\AdminAccountController:login
