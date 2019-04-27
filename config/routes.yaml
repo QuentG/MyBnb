@@ -61,10 +61,6 @@ reservations:
    path: /account/reservations
    controller: App\Controller\AccountController:reservations
 
-admin_annonces_index:
-   path: /admin/annonces
-   controller: App\Controller\AdminAnnonceController:index
-
 admin_login:
    path: /admin/login
    controller: App\Controller\AdminAccountController:login
@@ -72,3 +68,29 @@ admin_login:
 admin_logout:
    path: /admin/logout
    controller: App\Controller\AdminAccountController:logout
+
+admin_annonces_index:
+   path: /admin/annonces
+   controller: App\Controller\AdminAnnonceController:index
+
+edit_admin_annonce:
+   path: /admin/annonces/{id}/edit
+   controller: App\Controller\AdminAccountController::editAnnonce
+
+delete_admin_annonce:
+   path: /admin/annonces/{id}/delete
+   controller: App\Controller\AdminAccountController::deleteAnnonce
+
+admin_comments_index:
+   path: /admin/comments
+   controller: App\Controller\AdminCommentController:index
+
+edit_admin_comment:
+   path: /admin/comments/{id}/edit
+   controller: App\Controller\AdminCommentController::ediComment
+
+delete_admin_comment:
+   path: /admin/comments/{id}/delete
+   controller: App\Controller\AdminCommentController::deleteComment
+
+

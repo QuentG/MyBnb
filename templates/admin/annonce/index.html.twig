@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Administrations des annonces{% endblock %}
+{% block title %}Administration des annonces{% endblock %}
 
 {% block body %}
 
@@ -11,10 +11,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Titre de l'annonce</th>
-                    <th>Autheur</th>
+                    <th>Auteur</th>
                     <th class="text-center">Réservations</th>
                     <th class="text-center">Note/5</th>
-                    <tr>Actions</tr>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +28,8 @@
                     <td class="text-center">{{ annonce.reservations | length }}</td>
                     <td class="text-center">{{ annonce.averageRatings | number_format(1, ',', ' ') }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        <a href="{{ path('edit_admin_annonce', {'id': annonce.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                        <a href="{{ path('delete_admin_annonce', {'id': annonce.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             {% endfor %}
