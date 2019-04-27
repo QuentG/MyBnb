@@ -87,7 +87,7 @@ admin_comments_index:
 
 edit_admin_comment:
    path: /admin/comments/{id}/edit
-   controller: App\Controller\AdminCommentController::ediComment
+   controller: App\Controller\AdminCommentController::editComment
 
 delete_admin_comment:
    path: /admin/comments/{id}/delete

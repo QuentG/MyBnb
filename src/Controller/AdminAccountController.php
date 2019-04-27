@@ -89,7 +89,7 @@ class AdminAccountController extends AbstractController
 	}
 
 	/**
-	 * Supprime une annonce !
+	 * Supprime une annonce
 	 *
 	 * @param Annonce $annonce
 	 * @return Response
