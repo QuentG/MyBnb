@@ -37,7 +37,8 @@ class Reservation
 	 * @Assert\Date(message="Attention vous devez rentrer une date !")
 	 * @Assert\GreaterThan(
 	 *     "today",
-	 *     message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui !")
+	 *     message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui !",
+	 *	   groups={"front"})
      */
     private $startDate;
 
@@ -67,6 +68,8 @@ class Reservation
 
 	/**
 	 * @ORM\PrePersist()
+	 * @ORM\PreUpdate()
+	 *
 	 * @throws Exception
 	 */
     public function prePersist()

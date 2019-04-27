@@ -14,7 +14,7 @@ class AdminCommentController extends AbstractController
 {
 
 	/**
-	 * @var AnnonceRepository
+	 * @var CommentRepository
 	 */
 	private $repository;
 

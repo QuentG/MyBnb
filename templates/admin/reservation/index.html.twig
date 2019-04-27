@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des réservations{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <h1 class="my-5">Gestion des réservations</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date de réservation</th>
+                    <th class="text-center">Visiteur</th>
+                    <th class="text-center">Annonce</th>
+                    <th class="text-center">Durée</th>
+                    <th class="text-center">Montant</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.createdAt | date('d/m/Y H:i') }}</td>
+                    <td class="text-center">
+                        <img src="{{ reservation.reserveur.picture }}" class="avatar avatar-micro mr-1" alt="Avatar de {{ reservation.reserveur.fullName }}">{{ reservation.reserveur.fullName }}
+                    </td>
+                    <td class="text-center">{{ reservation.annonce.title }}</td>
+                    <td class="text-center">{{ reservation.duration }}</td>
+                    <td class="text-center">{{ reservation.amount | number_format(2, ",", " ") }} €</td>
+                    <td>
+                        <a href="{{ path('edit_admin_reservation', {'id': reservation.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                        <a href="{{ path('delete_admin_reservation', {'id': reservation.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

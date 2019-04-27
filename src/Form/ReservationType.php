@@ -40,6 +40,8 @@ class ReservationType extends ApplicationType
     {
         $resolver->setDefaults([
             'data_class' => Reservation::class,
+			// Permet de préciser les groups de validation qu'on veut executer
+			'validation_groups' => ['Default', 'front']
         ]);
     }
 }
