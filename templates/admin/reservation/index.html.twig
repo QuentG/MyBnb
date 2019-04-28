@@ -37,7 +37,7 @@
             {% endfor %}
             </tbody>
         </table>
-        {% include 'admin/includes/_pagination.html.twig' with {'route': 'admin_reservations_index'} %}
+        {{ pagination.render() }}
     </div>
 
 {% endblock %}
