@@ -82,7 +82,7 @@ delete_admin_annonce:
    controller: App\Controller\AdminAccountController::deleteAnnonce
 
 admin_comments_index:
-   path: /admin/comments
+   path: /admin/comments/{page<\d+>?1}
    controller: App\Controller\AdminCommentController:index
 
 edit_admin_comment:
@@ -94,7 +94,7 @@ delete_admin_comment:
    controller: App\Controller\AdminCommentController::deleteComment
 
 admin_reservations_index:
-   path: /admin/reservations
+   path: /admin/reservations/{page<\d+>?1}
    controller: App\Controller\AdminReservationController:index
 
 edit_admin_reservation:

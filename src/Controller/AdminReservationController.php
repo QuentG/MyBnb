@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\AdminReservationType;
 use App\Repository\ReservationRepository;
+use App\Service\Pagination;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,12 +39,17 @@ class AdminReservationController extends AbstractController
 	/**
 	 * Affiche toutes les réservations
 	 *
+	 * @param int $page
+	 * @param Pagination $pagination
 	 * @return Response
 	 */
-	public function index()
+	public function index(int $page, Pagination $pagination)
     {
+    	$pagination->setEntityClass(Reservation::class)
+			->setCurrentPage($page);
+
         return $this->render('admin/reservation/index.html.twig', [
-			'reservations' => $this->repository->findAll()
+			'pagination' => $pagination
         ]);
     }
 
