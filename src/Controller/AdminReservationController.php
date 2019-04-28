@@ -24,7 +24,7 @@ class AdminReservationController extends AbstractController
 	private $manager;
 
 	/**
-	 * AdminAnnonceController constructor.
+	 * AdminReservationController constructor.
 	 *
 	 * @param ReservationRepository $repository
 	 * @param ObjectManager $manager
@@ -80,7 +80,7 @@ class AdminReservationController extends AbstractController
 	}
 
 	/**
-	 * Supprime une réservation
+	 * Supprimer une réservation
 	 *
 	 * @param Reservation $reservation
 	 * @return Response
@@ -90,7 +90,7 @@ class AdminReservationController extends AbstractController
 		$this->manager->remove($reservation);
 		$this->manager->flush();
 
-		$this->addFlash('success', "La réservation a bien été supprimée");
+		$this->addFlash('success', "La réservation a bien été supprimée !");
 
 		return $this->redirectToRoute('admin_reservations_index');
 	}

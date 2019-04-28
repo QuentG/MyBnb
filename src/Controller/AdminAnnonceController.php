@@ -35,13 +35,22 @@ class AdminAnnonceController extends AbstractController
 	/**
 	 * Affiche toutes les annonces !
 	 *
+	 * @param int $page
 	 * @return Response
 	 */
-	public function index()
+	public function index(int $page)
     {
-    	$annonces = $this->repository->findAll();
+    	$limit = 10;
+    	// 1 * 10 = 10 - 10 = 0 && 2 * 10 = 20 - 10 = 10 etc..
+    	$start = $page * $limit - $limit;
+    	$total = count($this->repository->findAll());
+
+    	$pages = ceil($total / $limit); // 2,4 => ceil() = 3
+
         return $this->render('admin/annonce/index.html.twig', [
-        	'annonces' => $annonces
+        	'annonces' => $this->repository->findBy([], [], $limit, $start),
+			'page' => $page,
+			'pages' => $pages
         ]);
     }
 }

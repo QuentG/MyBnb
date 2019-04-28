@@ -70,7 +70,7 @@ admin_logout:
    controller: App\Controller\AdminAccountController:logout
 
 admin_annonces_index:
-   path: /admin/annonces
+   path: /admin/annonces/{page<\d+>?1} # <> = condition de l'expr régulière / ? = optionnel / 1 = si il n'y a aucun num de page donner il met 1
    controller: App\Controller\AdminAnnonceController:index
 
 edit_admin_annonce:
