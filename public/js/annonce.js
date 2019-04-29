@@ -1,14 +1,6 @@
-function deleteBtn() {
-    $('button[data-action="delete"]').click(function() {
-        const target = this.dataset.target;
-        $(target).remove();
-    });
-}
-
-function updateCounter() {
-    const counter = +$('#annonce_images div.form-group').length;
-    $('#widgets_counter').val(counter);
-}
+/* ------------------------
+--------- SCRIPT ---------
+------------------------ */
 
 $('#add-img').click(function() {
     // Récupération des futurs champs que l'on va créer
@@ -20,9 +12,24 @@ $('#add-img').click(function() {
     $("#annonce_images").append(proto);
 
     $('#widgets_counter').val(index + 1);
-
     deleteBtn();
 });
 
 updateCounter();
 deleteBtn();
+
+/* ------------------------
+------- FUNCTIONS --------
+------------------------ */
+
+function deleteBtn() {
+    $('button[data-action="delete"]').click(function() {
+        const target = this.dataset.target;
+        $(target).remove();
+    });
+}
+
+function updateCounter() {
+    const counter = +$('#annonce_images div.form-group').length;
+    $('#widgets_counter').val(counter);
+}

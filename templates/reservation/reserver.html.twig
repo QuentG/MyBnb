@@ -37,7 +37,6 @@
 
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-
     <script>
         // Script
         $(document).ready(function () {
@@ -50,28 +49,27 @@
                 ],
                 startDate: new Date()
             });
-            $('#reservation_startDate, #reservation_endDate').on('change', calculAmount());
+            $('#reservation_startDate, #reservation_endDate').on('change', calculAmount);
         });
 
         function calculAmount() {
             // Récupération des valeurs des 2 date
             const startDate = new Date($('#reservation_startDate').val()
-                .replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1')); // Regex ex: 12/03/1999
+                .replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1')) // Regex ex: 12/03/1999
 
             const endDate = new Date($('#reservation_endDate').val()
-                .replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1')); // Regex ex: 12/03/1999
+                .replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1')) // Regex ex: 12/03/1999
 
             if (startDate && endDate && startDate < endDate) {
-                const dayTime = 24 * 60 * 60 * 1000;
+                const dayTime = 24 * 60 * 60 * 1000
                 // Timestamp en ms
-                const interval = endDate.getTime() - startDate.getTime();
-                const days = interval / dayTime;
-                const amount = days * {{ annonce.price }};
+                const interval = endDate.getTime() - startDate.getTime()
+                const days = interval / dayTime
+                const amount = days * {{ annonce.price }}
 
-                $('#days').text(days);
-                $('#amount').text(amount.toLocaleString('fr-FR'));
+                $('#days').text(days)
+                $('#amount').text(amount.toLocaleString('fr-FR'))
             }
         }
     </script>
-
 {% endblock %}
