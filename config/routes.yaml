@@ -75,11 +75,11 @@ admin_annonces_index:
 
 edit_admin_annonce:
    path: /admin/annonces/{id}/edit
-   controller: App\Controller\AdminAccountController::editAnnonce
+   controller: App\Controller\AdminAnnonceController::editAnnonce
 
 delete_admin_annonce:
    path: /admin/annonces/{id}/delete
-   controller: App\Controller\AdminAccountController::deleteAnnonce
+   controller: App\Controller\AdminAnnonceController::deleteAnnonce
 
 admin_comments_index:
    path: /admin/comments/{page<\d+>?1}
@@ -104,5 +104,9 @@ edit_admin_reservation:
 delete_admin_reservation:
    path: /admin/reservations/{id}/delete
    controller: App\Controller\AdminReservationController::deleteReservation
+
+admin_dashboard_index:
+   path: /admin
+   controller: App\Controller\AdminDashboardController::index
 
 
