@@ -19,32 +19,24 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+	/**
+	 * Récupère les 2 utilisateurs avec les meilleurs moyennes qui ont minimum 3 annonces
+	 *
+	 * @param int $limit
+	 * @return mixed
+	 */
+	public function findBestUsers(int $limit = 2)
+	{
+		return $this->createQueryBuilder('u')
+			->join('u.annonces', 'a')
+			->join('a.comments', 'c')
+			->select('u as user, AVG(c.rating) as rating, COUNT(c) as sumComms')
+			->groupBy('u')
+			->having('sumComms > 3')
+			->orderBy('rating', 'DESC')
+			->setMaxResults($limit)
+			->getQuery()
+			->getResult()
+			;
+	}
 }
