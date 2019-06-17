@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administation des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-5">Gestion des utilisateurs</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom / Prénom</th>
+                <th>Email</th>
+                <th class="text-center">Nombres d'annonces</th>
+                <th class="text-center">Nombres de réservations</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination.data %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>
+                        <img src="{{ user.picture }}" alt="Avatar de {{ user.fullName }}" class="avatar avatar-micro mr-2">{{ user.fullName }}
+                    </td>
+                    <td>{{ user.email }}</td>
+                    <td class="text-center">{{ user.annonces | length }}</td>
+                    <td class="text-center">{{ user.reservations | length }}</td>
+                    <td>
+                        <a href="{{ path('delete_admin_user', {'id': user.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination.render() }}
+    </div>
+{% endblock %}

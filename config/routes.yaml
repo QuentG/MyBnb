@@ -105,6 +105,14 @@ delete_admin_reservation:
    path: /admin/reservations/{id}/delete
    controller: App\Controller\AdminReservationController::deleteReservation
 
+admin_users_index:
+   path: /admin/users/{page<\d+>?1}
+   controller: App\Controller\AdminUserController:index
+
+delete_admin_user:
+   path: /admin/users/{id}/delete
+   controller: App\Controller\AdminUserController::deleteUser
+
 admin_dashboard_index:
    path: /admin
    controller: App\Controller\AdminDashboardController::index
