@@ -11,5 +11,10 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "jquery": "^3.4.1",
+        "leaflet": "^1.5.1",
+        "places.js": "^1.16.4"
     }
 }

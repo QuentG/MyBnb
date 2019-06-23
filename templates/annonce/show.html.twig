@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+{% endblock %}
+
 {% set auth = annonce.author %}
 
 {% block title %} {{ annonce.title }} {% endblock %}
@@ -31,7 +35,7 @@
                             <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
                         {% endfor %}
                     </ol>
-                    <div class="carousel-inner">
+                    <div class="carousel-inner mb-4 mt-4">
                         {# On va récup un tableau d'objets liés d'images #}
                         {% for image in annonce.images %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
@@ -52,6 +56,12 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+
+                <h2>Géolocation de l'annonce</h2>
+
+                <div id="map" style="width: 100%; height: 400px" data-lat="{{ annonce.lat }}" data-lng="{{ annonce.lng }}">
+                </div>
+
                 <hr>
 
                 {% if annonce.comments | length > 0 %}
@@ -102,4 +112,25 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script>
+        let map = document.querySelector('#map')
+        let center = [map.dataset.lat, map.dataset.lng]
+
+        map = L.map('map').setView(center, 13)
+
+        let token = 'pk.eyJ1IjoicXVlbnRnIiwiYSI6ImNqeDh3am5kdDBpamQzb3Azd2FlN3lrMWoifQ.KRTukIV_-ZFPo5tzQGtR0A'
+        L.tileLayer(`https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=${token}`, {
+            maxZoom: 18,
+            minZoom: 12,
+            attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://openstreatmap/org/copyright">OpenStreetMap</a>'
+        }).addTo(map)
+
+        // Add marker
+        L.marker(center).addTo(map)
+
+    </script>
 {% endblock %}

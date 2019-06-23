@@ -98,7 +98,10 @@ class AppFixtures extends Fixture
 				->setContent($content)
 				->setPrice(mt_rand(50, 300))
 				->setRooms(mt_rand(2, 5))
-				->setAuthor($author);
+				->setAuthor($author)
+				//->setLat(1.2)
+				//->setLng(3.4)
+			;
 
 			// Remplissage des img
 			for ($j = 1; $j <= mt_rand(2,5); $j++)

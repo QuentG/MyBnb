@@ -1,3 +1,87 @@
-body {
-    background-color: lightgray;
+/* ------------------------
+-------   GENERAL   ------
+------------------------ */
+
+div.container, div.container-fluid {
+    margin-top: 20px;
+}
+
+span.rating i {
+    color: goldenrod;
+}
+
+/* ------------------------
+-------  HOME PAGE  ------
+------------------------ */
+
+
+
+/* ------------------------
+-------  SHOW PAGE  ------
+------------------------ */
+
+div.show-title h1, div.show-title p {
+    color: white;
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+div.show-title {
+    padding: 2em;
+    background-size: cover;
+    background-position: center center;
+}
+
+div.show-title .btn {
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
+div.carousel-caption {
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+.avatar {
+    max-width: 130px;
+    max-height: 130px;
+    border-radius: 50%;
+}
+
+.avatar-medium {
+    max-width: 70px;
+    max-height: 70px;
+}
+
+/* ------------------------
+--------  NAV BAR  --------
+------------------------ */
+
+.avatar-mini {
+    max-width: 25px;
+    max-height: 25px;
+}
+
+/* ------------------------
+------- CALENDRIER -------
+------------------------ */
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    color: firebrick !important;
+}
+
+/* ------------------------
+-- MY RESERVATIONS PAGE --
+------------------------ */
+
+.alert a {
+    text-decoration: none;
+}
+
+/* ------------------------
+---------  ADMIN   --------
+------------------------ */
+
+.avatar-micro{
+    max-width: 24px;
+    max-height: 24px;
 }

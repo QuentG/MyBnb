@@ -28,6 +28,15 @@
                 </div>
                 <div class="col">
                     <div class="alert alert-light">
+                        <h2>Adresse de l'annonce</h2>
+                        <hr>
+                        {{ form_row(form.address) }}
+                        {{ form_row(form.city) }}
+                        {{ form_row(form.zipCode) }}
+                        {{ form_row(form.lat) }}
+                        {{ form_row(form.lng) }}
+                    </div>
+                    <div class="alert alert-light">
                         <h2>Image de l'annonce</h2>
                         <hr>
                         {{ form_row(form.coverImage) }}
@@ -46,4 +55,20 @@
 
 {% block javascripts %}
     <script src="/js/annonce.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+    <script>
+        let inputAddress = document.querySelector('#annonce_address');
+
+        if(inputAddress !== null) {
+            let place = places({
+                container: inputAddress
+            });
+            place.on('change', e => {
+                document.querySelector('#annonce_city').value = e.suggestion.city;
+                document.querySelector('#annonce_zipCode').value = e.suggestion.postcode;
+                document.querySelector('#annonce_lat').value = e.suggestion.latlng.lat;
+                document.querySelector('#annonce_lng').value = e.suggestion.latlng.lng;
+            })
+        }
+    </script>
 {% endblock %}

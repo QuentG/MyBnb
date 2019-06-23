@@ -88,6 +88,31 @@ class Annonce
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="float", scale=4, precision=6)
+     */
+    private $lat;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=7)
+     */
+    private $lng;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $zipCode;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -102,12 +127,12 @@ class Annonce
 	 * @return void
 	 */
 	public function initSlug() {
-
-		if(empty($this->slug)) { // Si nous n'avons pas de Slug cela nous en crée un
-			$slugify = new Slugify();
-			$this->slug = $slugify->slugify($this->title);
-		}
-	}
+                                             
+                                             		if(empty($this->slug)) { // Si nous n'avons pas de Slug cela nous en crée un
+                                             			$slugify = new Slugify();
+                                             			$this->slug = $slugify->slugify($this->title);
+                                             		}
+                                             	}
 
 	/**
 	 * Obtenir les jours qui ne sont pas disponibles pour une annonce
@@ -115,27 +140,27 @@ class Annonce
 	 * @return array Un tableau d'objets DateTime représentant les jours d'occupation
 	 */
 	public function getNotAvailableDays() {
-		$notAvailableDays = [];
-
-		foreach($this->reservations as $reservation) {
-			// Calcul des jours qui se trouvent entre la date d'arrivée et de départ
-			$result = range(
-				$reservation->getStartDate()->getTimestamp(),
-				$reservation->getEndDate()->getTimestamp(),
-				24 * 60 * 60
-			);
-			// Transformer la tableau de range() en un autre tableau
-			$days = array_map(function ($dayTimestamp) {
-				// Transforme le Timestamp en une véritable date
-				return new DateTime(date('Y-m-d', $dayTimestamp));
-			}, $result);
-
-			// Fusionner 2 tableaux
-			$notAvailableDays = array_merge($notAvailableDays, $days);
-		}
-
-		return $notAvailableDays;
-	}
+                                             		$notAvailableDays = [];
+                                             
+                                             		foreach($this->reservations as $reservation) {
+                                             			// Calcul des jours qui se trouvent entre la date d'arrivée et de départ
+                                             			$result = range(
+                                             				$reservation->getStartDate()->getTimestamp(),
+                                             				$reservation->getEndDate()->getTimestamp(),
+                                             				24 * 60 * 60
+                                             			);
+                                             			// Transformer la tableau de range() en un autre tableau
+                                             			$days = array_map(function ($dayTimestamp) {
+                                             				// Transforme le Timestamp en une véritable date
+                                             				return new DateTime(date('Y-m-d', $dayTimestamp));
+                                             			}, $result);
+                                             
+                                             			// Fusionner 2 tableaux
+                                             			$notAvailableDays = array_merge($notAvailableDays, $days);
+                                             		}
+                                             
+                                             		return $notAvailableDays;
+                                             	}
 
 	/**
 	 * Obtenir la note moyenne globale des notes pour cette annonce
@@ -143,18 +168,18 @@ class Annonce
 	 * @return float|int
 	 */
 	public function getAverageRatings() {
-		// Calcul de la somme des notations
-		$sum = array_reduce($this->comments->toArray(), function ($total, $comment) {
-			return $total + $comment->getRating();
-		}, 0);
-		// Division pour avoir la moyenne
-		if(count($this->comments) > 0) {
-			$moy = $sum / count($this->comments);
-			return $moy;
-		}
-
-		return 0;
-	}
+                                             		// Calcul de la somme des notations
+                                             		$sum = array_reduce($this->comments->toArray(), function ($total, $comment) {
+                                             			return $total + $comment->getRating();
+                                             		}, 0);
+                                             		// Division pour avoir la moyenne
+                                             		if(count($this->comments) > 0) {
+                                             			$moy = $sum / count($this->comments);
+                                             			return $moy;
+                                             		}
+                                             
+                                             		return 0;
+                                             	}
 
 	/**
 	 * Récupère le commentaire d'un auteur par rapport à une annonce !
@@ -163,13 +188,13 @@ class Annonce
 	 * @return mixed|null
 	 */
 	public function getCommentFromAuthor(User $author) {
-
-		foreach ($this->comments as $comment) {
-			if($comment->getAuthor() === $author) return $comment;
-		}
-
-		return null;
-	}
+                                             
+                                             		foreach ($this->comments as $comment) {
+                                             			if($comment->getAuthor() === $author) return $comment;
+                                             		}
+                                             
+                                             		return null;
+                                             	}
 
     public function getId(): ?int
     {
@@ -361,6 +386,66 @@ class Annonce
                 $comment->setAnnonce(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(string $zipCode): self
+    {
+        $this->zipCode = $zipCode;
 
         return $this;
     }
