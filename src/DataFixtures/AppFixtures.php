@@ -99,8 +99,11 @@ class AppFixtures extends Fixture
 				->setPrice(mt_rand(50, 300))
 				->setRooms(mt_rand(2, 5))
 				->setAuthor($author)
-				//->setLat(1.2)
-				//->setLng(3.4)
+				->setAddress($faker->streetAddress)
+				->setCity($faker->city)
+				->setZipCode($faker->postcode)
+				->setLat($faker->latitude)
+				->setLng($faker->longitude)
 			;
 
 			// Remplissage des img
